@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@theme {
+   /* Display & Headline fonts - Manrope with weights */
+  --font-display-bold: Manrope-Bold, system-ui, sans-serif;
+  --font-display-semibold: Manrope-SemiBold, system-ui, sans-serif;
+  --font-headline-bold: Manrope-Bold, system-ui, sans-serif;
+  --font-headline-semibold: Manrope-SemiBold, system-ui, sans-serif;
+  
+  /* Body, Title, Label fonts - Inter with weights */
+  --font-title-medium: Inter-Medium, system-ui, sans-serif;
+  --font-body-regular: Inter-Regular, system-ui, sans-serif;
+  --font-label-semibold: Inter-SemiBold, system-ui, sans-serif;
+}
