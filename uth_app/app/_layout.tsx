@@ -7,7 +7,7 @@ const RootLayout= () => {
     <Stack screenOptions={{ headerShown: false }}>
       {/* <Stack.Screen name="(onboard)" />
       <Stack.Screen name="auth" /> */}
-      <Stack.Screen name="(inventory)" />
+      <Stack.Screen name="(tabs)" />
     </Stack>
   );
 }

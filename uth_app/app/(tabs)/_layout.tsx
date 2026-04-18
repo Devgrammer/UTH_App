@@ -63,7 +63,7 @@ export default function RootLayout() {
         }}
       />
       <Tabs.Screen
-        name="rentalScreen"
+        name="(rentals)"
         options={{
           title: "Rentals",
           tabBarIcon: ({ focused, color, size }) => (
