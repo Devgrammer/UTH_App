@@ -5,9 +5,9 @@ import "../global.css";
 const RootLayout= () => {
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(onboard)" />
-      <Stack.Screen name="auth" />
-      <Stack.Screen name="(tabs)" />
+      {/* <Stack.Screen name="(onboard)" />
+      <Stack.Screen name="auth" /> */}
+      <Stack.Screen name="(inventory)" />
     </Stack>
   );
 }
