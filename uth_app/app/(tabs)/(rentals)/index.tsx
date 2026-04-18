@@ -1,9 +1,13 @@
-import RentalCard from '@/components/ui/rentalCard';
+
+import { useRouter } from 'expo-router';
+import RentalCard from '../../../components/ui/rentalCard';
 import { ScrollView, Text, TextInput,  TouchableOpacity, View } from 'react-native'
 
 const RentalScreen = () => {
+  const router = useRouter()
   return (
     <View className="gap-4 p-4">
+      <TouchableOpacity onPress={()=>router.replace('/rentalLedgerScreen')}><Text>Cart</Text></TouchableOpacity>
       <View className="w-full p-2 rounded-lg bg-surface-container-lowest h-fit">
         <View className="flex-row items-center justify-between">
           <Text>INVENTORY FILTERS</Text>
