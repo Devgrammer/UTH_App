@@ -2,13 +2,14 @@ import { Image } from 'expo-image'
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { Button, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const onboardingImg = require('../../assets/images/ob1.png')
 
 const OnboardingScreen1 = () => {
     const router = useRouter()
   return (
-    <View className="p-4">
+    <SafeAreaView className="px-4">
       <Image className="w-full h-96 rounded-2xl" source={onboardingImg} />
       <View>
         <Text>Manage Your Banquet Business Effortlessly</Text>
@@ -22,7 +23,7 @@ const OnboardingScreen1 = () => {
       <TouchableOpacity onPress={()=>router.replace('/onboardingScreen2')} className="flex-row items-center justify-center w-1/2 mx-auto rounded-full h-14 bg-primary">
         <Text className=" text-surface-container-lowest">GET STARTED</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 

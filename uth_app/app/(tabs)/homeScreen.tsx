@@ -1,9 +1,7 @@
 import HomeCard from "@/components/ui/card";
 import DetailCard from "@/components/ui/detailCard";
-import { Calendar, Plus } from "lucide-react-native";
-import React from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Calendar } from "lucide-react-native";
+import { ScrollView, Text, View } from "react-native";
 
 const HomeScreen = () => {
   return (
@@ -19,7 +17,7 @@ const HomeScreen = () => {
       <View className="flex-1 gap-x-4"></View>
       <View className="">
         <Text className="text-4xl font-bold font-display">
-          Good Morning, Abhinav 
+          Good Morning, Abhinav
         </Text>
         <Text>Your banquet floor is ready for today orchestration.</Text>
       </View>
