@@ -2,13 +2,14 @@ import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const onboardingImg = require("../../assets/images/ob1.png");
 
 const OnboardingScreen3 = () => {
   const router = useRouter()
   return (
-    <View className="p-4">
+    <SafeAreaView className="px-4">
       <Image className="w-full h-96 rounded-2xl" source={onboardingImg} />
       <View>
         <Text>Master Your Operations</Text>
@@ -57,13 +58,13 @@ const OnboardingScreen3 = () => {
           <Text className="">BACK</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => router.replace("/auth/loginScreen")}
+          onPress={() => router.replace("/loginScreen")}
           className="flex-row items-center justify-center w-1/4 mx-auto rounded-full h-14 bg-primary"
         >
           <Text className=" text-surface-container-lowest">LOGIN</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
