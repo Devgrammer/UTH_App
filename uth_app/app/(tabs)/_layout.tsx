@@ -7,6 +7,7 @@ import {
   House,
   Layers2,
   MessageSquare,
+  Settings,
 } from "lucide-react-native";
 import { Button, Text, TouchableOpacity, View } from "react-native";
 import { Image } from "expo-image";
@@ -77,6 +78,16 @@ export default function RootLayout() {
           title: "About",
           tabBarIcon: ({ focused, color, size }) => (
             <MessageSquare size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="settingScreen"
+        options={{
+          title: "Setting",
+          tabBarIcon: ({ focused, color, size }) => (
+            <Settings size={size} color={color} />
           ),
         }}
       />

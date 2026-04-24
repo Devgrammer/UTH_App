@@ -20,11 +20,12 @@ const RootLayout = () => {
 
   const [user, setUser] = useState({});
   const [error, setError] = useState([]);
-  const [isLoading,setIsLoading]=useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [authState, setAuthState] = useState<AuthState>({
     token: null,
     authenticated: false,
   });
+  const [hasOnboarded, setHasOnboarded] = useState<boolean>(false)
 
   useEffect(() => {
     async function getToken(key: string) {
@@ -36,7 +37,15 @@ const RootLayout = () => {
         });
       }
     }
-    getToken("token");
+    async function getOnboard(key: string) {
+      let ob = await SecureStore.getItemAsync(key);
+      if (ob) {
+        setHasOnboarded(ob)
+      }
+    }
+
+    getOnboard("onboarded");
+    getToken('token')
   }, []);
 
   const [fontsLoaded] = useFonts({
@@ -57,13 +66,14 @@ const RootLayout = () => {
     ],
   };
 
-  async function setToken(key: string, value: string) {
+  async function setToken(key: string, value: string | boolean) {
     await SecureStore.setItemAsync(key, value);
   }
   async function getToken(key: string) {
     let result = await SecureStore.getItemAsync(key);
     return result;
   }
+
 
   const value = {
     user,
@@ -80,7 +90,9 @@ const RootLayout = () => {
   return (
     <AppContext.Provider value={value}>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(onboard)" />
+        <Stack.Protected guard={!hasOnboarded}>
+          <Stack.Screen name="(onboard)" />
+        </Stack.Protected>
         <Stack.Screen name="(auth)" />
         <Stack.Protected guard={authState.authenticated}>
           <Stack.Screen name="(tabs)" />
