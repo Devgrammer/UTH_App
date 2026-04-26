@@ -83,7 +83,7 @@ export default function RootLayout() {
       />
 
       <Tabs.Screen
-        name="settingScreen"
+        name="(settings)"
         options={{
           title: "Setting",
           tabBarIcon: ({ focused, color, size }) => (

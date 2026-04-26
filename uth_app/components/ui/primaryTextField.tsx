@@ -1,6 +1,6 @@
 import { LucideIcon, LucideProps, Mail, } from 'lucide-react-native'
 import React from 'react'
-import { Text, TextInput, View } from "react-native";
+import { KeyboardAvoidingView, Platform, Text, TextInput, View } from "react-native";
 
 interface TextFieldProps {
   fieldName: string;
@@ -10,25 +10,33 @@ interface TextFieldProps {
   value?: string;
   handleBlur: (text: string) => any;
   Icon?: LucideIcon;
+  multiline?: boolean;
+  keyboardType?: "default" | "numeric" | "email-address" | "phone-pad" | "url";
+  autoCapitalize?: "none" | "sentences" | "words" | "characters";
 }
 
-const PrimaryTextField = ({ fieldName, placeholder, handleChange, secure, value, handleBlur, Icon }: TextFieldProps) => {
+const PrimaryTextField = ({ fieldName, placeholder, handleChange, secure, value, handleBlur, Icon,multiline, autoCapitalize,keyboardType }: TextFieldProps) => {
+  const keyboardVerticalOffset = Platform.OS === "android" ? 64 : 0;
   return (
-    <View className="flex-row items-center w-full h-12 gap-4 px-2 rounded-lg bg-neutral-300 text-on_surface">
-      {Icon && (
-        <View className="text-sm">
-          {<Icon size={16} />}
-        </View>
-      )}
-      <TextInput
-        className="w-full h-full outline-none"
-        placeholder={placeholder}
-        onChangeText={handleChange(fieldName)}
-        onBlur={handleBlur(fieldName)}
-        secureTextEntry={secure ? true : false}
-        value={value}
-      />
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={keyboardVerticalOffset}
+    >
+      <View className="flex-row items-center w-full h-12 gap-4 px-2 rounded-lg bg-neutral-300 text-on_surface">
+        {Icon && <View className="text-sm">{<Icon size={16} />}</View>}
+        <TextInput
+          className="w-full h-full outline-none"
+          placeholder={placeholder}
+          onChangeText={handleChange(fieldName)}
+          onBlur={handleBlur(fieldName)}
+          secureTextEntry={secure ? true : false}
+          value={value}
+          multiline={multiline ? multiline : false}
+          autoCapitalize={autoCapitalize}
+          keyboardType={keyboardType}
+        />
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
