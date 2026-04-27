@@ -83,6 +83,12 @@ const VenueSchema = new mongoose.Schema(
       match: [/^[0-9]{10}$/, "Please enter a valid 10-digit phone number"],
       index: true,
     },
+    status:{
+      type:String,
+       enum: ['active', 'inactive', 'maintenance'],
+       default:'active',
+       required:true
+    },
     googleProfile: {
       type: String,
       trim: true,
