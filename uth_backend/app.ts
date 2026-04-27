@@ -5,8 +5,9 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 const connectToDB = require('./db/db')
-const userRoutes=require('./routes/user.route')
 const cookieParser = require('cookie-parser')
+const userRoutes=require('./routes/user.route')
+const venueRoutes=require('./routes/venue.route')
 
 
 connectToDB();
@@ -31,5 +32,6 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api', userRoutes)
+app.use('/api/venue', venueRoutes)
 
 module.exports = app;
