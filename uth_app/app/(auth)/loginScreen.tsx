@@ -23,6 +23,8 @@ const LoginScreen = () => {
       });
       if (response?.status === 200) {
         setToken("token", response.data.token);
+        setToken("user", JSON.stringify(response.data.user));
+        console.log('res', response)
         setIsLoading(false)
         router.replace("/(tabs)/homeScreen");
       }

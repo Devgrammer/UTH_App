@@ -28,7 +28,15 @@ const RootLayout = () => {
   const [hasOnboarded, setHasOnboarded] = useState<boolean>(false)
 
   useEffect(() => {
+
+    async function getSecureItem(key: string, setter: (value: any) => void) {
+      let item = await SecureStore.getItemAsync(key);
+      if (item) {
+        setter(item);
+      }
+    }
     async function getToken(key: string) {
+
       let token = await SecureStore.getItemAsync(key);
       if (token) {
         setAuthState({
@@ -37,15 +45,13 @@ const RootLayout = () => {
         });
       }
     }
-    async function getOnboard(key: string) {
-      let ob = await SecureStore.getItemAsync(key);
-      if (ob) {
-        setHasOnboarded(ob)
-      }
-    }
 
-    getOnboard("onboarded");
-    getToken('token')
+    getSecureItem('onboarded', setHasOnboarded)
+    getSecureItem('user', setUser)
+    getSecureItem('user', (t)=> setAuthState({
+          token: t,
+          authenticated: true,
+        }))
   }, []);
 
   const [fontsLoaded] = useFonts({

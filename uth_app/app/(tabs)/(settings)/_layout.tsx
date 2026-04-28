@@ -7,6 +7,7 @@ const RootLayout = () => {
         <Stack screenOptions={{ headerShown: false }}>
             <Stack.Screen name="index" />
             <Stack.Screen name="addVenue" />
+            <Stack.Screen name="allVenues" />
         </Stack>
     );
 }

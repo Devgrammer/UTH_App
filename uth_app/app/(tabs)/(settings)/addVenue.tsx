@@ -7,6 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Image } from 'expo-image';
 import { Droplets, House, Link2, LucideIcon, Mail, MapPin, NotebookTabs, ParkingCircle, Phone, Presentation, User, Users, UsersRound, Utensils, Wifi, Wind } from 'lucide-react-native';
 import PrimaryButton from '@/components/ui/primaryButton';
+import { router } from 'expo-router';
 interface VenueField {
     id: number;
     label: string;
@@ -208,130 +209,141 @@ const AddVenue = () => {
 
 
     return (
-        <SafeAreaView className="px-4">
-            <ScrollView>
-                <View>
-                    <Text>New Estate Venue</Text>
-                    <Text>
-                        Complete the details below to resister your premium venuein the
-                        directory
-                    </Text>
-                </View>
-                <View>
-                    <Formik
-                        initialValues={{
-                            venueName: "",
-                            minCapacity: 0,
-                            maxCapacity: 0,
-                            desc: "",
-                            amenities: [],
-                            location: "",
-                            phoneNumber: "",
-                            googleProfile: "",
-                        }}
-                        onSubmit={(values) => console.log(values)}
-                    >
-                        {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => {
-                            const handlePress = (
-                                fieldName: string
-                            ) => {
-                                const amenities = values.amenities
-                                if (!amenities.includes(fieldName)) {
-                                    setFieldValue("amenities", [...amenities, fieldName]);
-
-                                } else {
-                                    const updatedAmenities = amenities.filter((el) => el !== fieldName)
-                                    setFieldValue("amenities", updatedAmenities);
-
-                                }
-                            };
-                            return (
-                                <View className="gap-y-8">
-                                    {/* MEDIA */}
-                                    <View>
-                                        <Text>Media</Text>
-                                        <View>
-                                            <TouchableOpacity
-                                                className="items-center justify-center w-full h-24 border border-dashed rounded-lg border-neutral-600 bg-neutral-300"
-                                                onPress={pickImage}
-                                            >
-                                                <Text>Pick an image from camera roll</Text>
-                                            </TouchableOpacity>
-                                            {image && <Image source={{ uri: image }} />}
-                                        </View>
-                                    </View>
-                                    {/* BASIC DETAILS */}
-                                    <View className="gap-y-4">
-                                        <Text>BASIC DETAIL</Text>
-                                        {venueFormField.basicDetail.map((el, index) => {
-                                            const {
-                                                label,
-                                                fieldName,
-                                                multiline,
-                                                id,
-                                                placeholder,
-                                                icon,
-                                                autoCapitalize,
-                                                keyboardType
-                                            } = el;
-                                            return (
-                                                <View key={`BD-${index}_${id}`}>
-                                                    <Text>{label}</Text>
-                                                    <PrimaryTextField
-                                                        Icon={icon}
-                                                        fieldName={fieldName}
-                                                        handleChange={handleChange}
-                                                        placeholder={placeholder}
-                                                        secure={false}
-                                                        value={(values as any)[fieldName]}
-                                                        handleBlur={handleBlur}
-                                                        multiline={multiline}
-                                                        autoCapitalize={autoCapitalize}
-                                                        keyboardType={keyboardType}
-                                                    />
-                                                </View>
-                                            );
-                                        })}
-                                    </View>
-                                    {/* AMENITIES */}
-                                    <View className="gap-y-8">
-                                        <Text>Amenities</Text>
-                                        <View className="flex-row flex-wrap gap-4 mx-auto">
-                                            {venueFormField.amenities.map((el, index) => {
-                                                const { label, fieldName, id } =
-                                                    el;
-                                                return (
-                                                    <>
-                                                        <TouchableOpacity
-                                                            key={`AM-${index}_${id}`}
-                                                            className={`items-center justify-center w-[47%] h-32  rounded-lg ${values.amenities.includes(fieldName) ? "bg-emerald-200 border-2 border-emerald-800" : "bg-white"}`}
-                                                            onPress={() => handlePress(fieldName)}
-                                                        >
-                                                            <View className="">
-                                                                <View className="mx-auto">
-                                                                    <el.icon size={24} />
-                                                                </View>
-                                                                <Text className="font-bold text-brand font-heading">
-                                                                    {label.toUpperCase()}
-                                                                </Text>
-                                                            </View>
-                                                        </TouchableOpacity>
-                                                    </>
-                                                );
-                                            })}
-                                        </View>
-                                    </View>
-                                    <PrimaryButton
-                                        handlePress={handleSubmit}
-                                        title="Add Venue"
-                                    />
+      <SafeAreaView className="px-4">
+        <PrimaryButton
+          title="Back to Settings"
+          handlePress={() => {
+            router.replace("/(tabs)/(settings)");
+          }}
+          addBtnClass=" justify-start "
+          addTitleClass=" font-bold text-left"
+        />
+        <ScrollView>
+          <View>
+            <Text>New Estate Venue</Text>
+            <Text>
+              Complete the details below to resister your premium venuein the
+              directory
+            </Text>
+          </View>
+          <View>
+            <Formik
+              initialValues={{
+                venueName: "",
+                minCapacity: 0,
+                maxCapacity: 0,
+                desc: "",
+                amenities: [],
+                location: "",
+                phoneNumber: "",
+                googleProfile: "",
+              }}
+              onSubmit={(values) => console.log(values)}
+            >
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                setFieldValue,
+              }) => {
+                const handlePress = (fieldName: string) => {
+                  const amenities = values.amenities;
+                  if (!amenities.includes(fieldName)) {
+                    setFieldValue("amenities", [...amenities, fieldName]);
+                  } else {
+                    const updatedAmenities = amenities.filter(
+                      (el) => el !== fieldName
+                    );
+                    setFieldValue("amenities", updatedAmenities);
+                  }
+                };
+                return (
+                  <View className="gap-y-8">
+                    {/* MEDIA */}
+                    <View>
+                      <Text>Media</Text>
+                      <View>
+                        <TouchableOpacity
+                          className="items-center justify-center w-full h-24 border border-dashed rounded-lg border-neutral-600 bg-neutral-300"
+                          onPress={pickImage}
+                        >
+                          <Text>Pick an image from camera roll</Text>
+                        </TouchableOpacity>
+                        {image && <Image source={{ uri: image }} />}
+                      </View>
+                    </View>
+                    {/* BASIC DETAILS */}
+                    <View className="gap-y-4">
+                      <Text>BASIC DETAIL</Text>
+                      {venueFormField.basicDetail.map((el, index) => {
+                        const {
+                          label,
+                          fieldName,
+                          multiline,
+                          id,
+                          placeholder,
+                          icon,
+                          autoCapitalize,
+                          keyboardType,
+                        } = el;
+                        return (
+                          <View key={`BD-${index}_${id}`}>
+                            <Text>{label}</Text>
+                            <PrimaryTextField
+                              Icon={icon}
+                              fieldName={fieldName}
+                              handleChange={handleChange}
+                              placeholder={placeholder}
+                              secure={false}
+                              value={(values as any)[fieldName]}
+                              handleBlur={handleBlur}
+                              multiline={multiline}
+                              autoCapitalize={autoCapitalize}
+                              keyboardType={keyboardType}
+                            />
+                          </View>
+                        );
+                      })}
+                    </View>
+                    {/* AMENITIES */}
+                    <View className="gap-y-8">
+                      <Text>Amenities</Text>
+                      <View className="flex-row flex-wrap gap-4 mx-auto">
+                        {venueFormField.amenities.map((el, index) => {
+                          const { label, fieldName, id } = el;
+                          return (
+                            <>
+                              <TouchableOpacity
+                                key={`AM-${index}_${id}`}
+                                className={`items-center justify-center w-[47%] h-32  rounded-lg ${values.amenities.includes(fieldName) ? "bg-emerald-200 border-2 border-emerald-800" : "bg-white"}`}
+                                onPress={() => handlePress(fieldName)}
+                              >
+                                <View className="">
+                                  <View className="mx-auto">
+                                    <el.icon size={24} />
+                                  </View>
+                                  <Text className="font-bold text-brand font-heading">
+                                    {label.toUpperCase()}
+                                  </Text>
                                 </View>
-                            )
-                        }}
-                    </Formik>
-                </View>
-            </ScrollView>
-        </SafeAreaView>
+                              </TouchableOpacity>
+                            </>
+                          );
+                        })}
+                      </View>
+                    </View>
+                    <PrimaryButton
+                      handlePress={handleSubmit}
+                      title="Add Venue"
+                    />
+                  </View>
+                );
+              }}
+            </Formik>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
 }
 
