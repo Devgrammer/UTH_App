@@ -47,7 +47,7 @@ const AllVenues = () => {
         getMyVenues();
     }, []);
     return (
-        <ScrollView className="p-4">
+        <ScrollView className="gap-4 p-4">
             <Text>Venue</Text>
             <PrimaryButton
                 title="Back to Settings"
@@ -57,55 +57,57 @@ const AllVenues = () => {
                 addBtnClass=" justify-start "
                 addTitleClass=" font-bold text-left"
             />
-            {venues.map((venue, index) => {
-                const {
-                    venueImage,
-                    venueName,
-                    location,
-                    status,
-                    maxCapacity,
-                    amenities,
-                } = venue;
-                return (
-                    <View
-                        key={`v_${index}`}
-                        className="w-full p-4 bg-white shadow-xs gap-y-4 h-fit rounded-xl"
-                    >
-                        <Image source={venueImage} className="w-full h-44 rounded-xl" />
+            <View className="gap-8">
+                {venues.map((venue, index) => {
+                    const {
+                        venueImage,
+                        venueName,
+                        location,
+                        status,
+                        maxCapacity,
+                        amenities,
+                    } = venue;
+                    return (
+                        <View
+                            key={`v_${index}`}
+                            className="w-full p-4 bg-white shadow-xs gap-y-4 h-fit rounded-xl"
+                        >
+                            <Image source={venueImage} className="w-full h-44 rounded-xl" />
 
-                        <View className="flex-row items-start justify-between">
-                            <View>
-                                <Text>{venueName}</Text>
-                                <View className="flex-row items-center gap-1">
-                                    <MapPin size={12} />
-                                    <Text className="text-xs">{location}</Text>
+                            <View className="flex-row items-start justify-between">
+                                <View>
+                                    <Text>{venueName}</Text>
+                                    <View className="flex-row items-center gap-1">
+                                        <MapPin size={12} />
+                                        <Text className="text-xs">{location}</Text>
+                                    </View>
+                                </View>
+
+                                <View className="p-1 px-2 rounded-full w-fit h-fit bg-emerald-200">
+                                    <Text className="text-xs font-semibold ">
+                                        {status.toUpperCase()}
+                                    </Text>
                                 </View>
                             </View>
 
-                            <View className="p-1 px-2 rounded-full w-fit h-fit bg-emerald-200">
-                                <Text className="text-xs font-semibold ">
-                                    {status.toUpperCase()}
-                                </Text>
+                            <View className="flex-row gap-4">
+                                <View>
+                                    <Text className="text-sm text-text-lighter">CAPACITY</Text>
+                                    <Text className="text-xl font-bold text-brand-light">
+                                        {maxCapacity}
+                                    </Text>
+                                </View>
+                                <View>
+                                    <Text className="text-sm text-text-lighter">AMENITIES</Text>
+                                    <Text className="text-xl font-bold text-brand-light">
+                                        {amenities.length}+
+                                    </Text>
+                                </View>
                             </View>
                         </View>
-
-                        <View className="flex-row gap-4">
-                            <View>
-                                <Text className="text-sm text-text-lighter">CAPACITY</Text>
-                                <Text className="text-xl font-bold text-brand-light">
-                                    {maxCapacity}
-                                </Text>
-                            </View>
-                            <View>
-                                <Text className="text-sm text-text-lighter">AMENITIES</Text>
-                                <Text className="text-xl font-bold text-brand-light">
-                                    {amenities.length}+
-                                </Text>
-                            </View>
-                        </View>
-                    </View>
-                );
-            })}
+                    );
+                })}
+            </View>
         </ScrollView>
     );
 };
