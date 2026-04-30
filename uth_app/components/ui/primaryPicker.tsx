@@ -12,6 +12,10 @@ interface ButtonProps {
 
     handlePress?: () => void;
     addPickerClass?: string;
+    Icon?:LucideIcon;
+    size?:number;
+    placeholder?:string;
+    fieldName:string;
 
     data: {
         label: string;
@@ -28,21 +32,24 @@ interface ButtonProps {
     ) => Promise<void | FormikErrors<any>>|undefined
 }
 
-const PrimaryPicker = ({ data, handlePress, addPickerClass, initialValue, setFieldValue }: ButtonProps) => {
+const PrimaryPicker = ({ data, handlePress, addPickerClass, initialValue, setFieldValue,Icon, size, placeholder , fieldName}: ButtonProps) => {
     return (
-        <View className={`flex-row rounded-lg bg-neutral-300 h-14 items-center gap-2 px-2 `}>
-        <Activity size={14}/>
+        <View className={`flex-row rounded-lg bg-neutral-300 h-12 items-center gap-2 px-2 `}>
+        {
+                Icon ? <Icon size={size}/> : <Activity size={14} />
+        }
         <View className='w-[95%]' >
         <Picker
+            itemStyle={{fontSize:'10px'}}
             selectedValue={initialValue}
-            style={{backgroundColor:'none'}}
+                    style={{ backgroundColor: 'none', fontSize: '5px' }}
             onValueChange={(itemValue, itemIndex) => {
-                setFieldValue('status', itemValue)
+                setFieldValue(fieldName, itemValue)
             }}
             className={`w-full h-16 placeholder:text-neutral-700 flex-row justify-center items-center bg-neutral-300  rounded-lg ${addPickerClass}`}
-            ><Picker.Item label={"Select Status"} value={null} enabled={false} color="#999" />
+                ><Picker.Item label={placeholder} value={null} enabled={false} color="#999" style={{ fontSize: 14 }} />
             {
-                data.map((el, index) => { return (<Picker.Item key={`vs-${index}`} label={el.label} value={el.value} />) })
+                        data.map((el, index) => { return (<Picker.Item key={`vs-${index}`} label={el.label} value={el.value} style={{ fontSize: 14 }} />) })
             }
         </Picker>
             </View>
