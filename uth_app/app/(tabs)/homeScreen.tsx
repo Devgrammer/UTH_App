@@ -1,10 +1,17 @@
 import HomeCard from "@/components/ui/card";
 import DetailCard from "@/components/ui/detailCard";
+import PageHeader from "@/components/ui/pageHeader";
+import { AppContext } from "@/context/appContext";
 import { Calendar } from "lucide-react-native";
+import { useContext } from "react";
 import { ScrollView, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
+  const {user}= useContext(AppContext)
+  const userDetail = JSON.parse(user)
   return (
+    <SafeAreaView className="relative flex-1">
     <ScrollView
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
@@ -16,11 +23,10 @@ const HomeScreen = () => {
     >
       <View className="flex-1 gap-x-4"></View>
       <View className="">
-        <Text className="text-4xl font-bold font-display">
-          Good Morning, Abhinav
-        </Text>
-        <Text>Your banquet floor is ready for today orchestration.</Text>
+        <PageHeader title={'Good Morning,'} heading={userDetail.fullName} />
+        {/* <Text>Your banquet floor is ready for today orchestration.</Text> */}
       </View>
+      
 
       <View className="flex gap-4">
         <HomeCard
@@ -73,6 +79,7 @@ const HomeScreen = () => {
         />
       </View>
     </ScrollView>
+    </SafeAreaView>
   );
 };
 
