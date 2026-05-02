@@ -1,6 +1,7 @@
 import BookingCardLg from "@/components/ui/bookingCardLg";
 import BookingCardSm from "@/components/ui/bookingCardSm";
 import FloatingButton from "@/components/ui/floatingActionBtn";
+import PageHeader from "@/components/ui/pageHeader";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
@@ -12,20 +13,16 @@ import {
   View,
 } from "react-native";
 import { Calendar } from "react-native-calendar-ui";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const BookingScreen = () => {
   const [view, setView] = useState("calendar");
 
   const handleFloat=() =>{ router.push('/booking/addBookingScreen')}
   return (
-    <>
-      <View className="relative flex min-h-screen " style={{ padding: 16 }}>
-        <View className="">
-          <Text>{"Event orchestration".toUpperCase()}</Text>
-          <Text className="text-4xl font-bold font-display">
-            Booking Calendar
-          </Text>
-        </View>
+    <SafeAreaView className="relative flex-1" >
+      <ScrollView className="flex min-h-screen " style={{ padding: 16 }}>
+        <PageHeader title={'Event orchestration'} heading={'Booking Calendar'}/>
         <View className="flex-row w-1/2 gap-2 px-2 py-1 my-4 rounded-md bg-surface-container-high">
           <TouchableOpacity
             className="px-1 rounded-sm text-primary active:bg-surface-container-lowest w-fit"
@@ -122,9 +119,9 @@ const BookingScreen = () => {
             </View>
           )}
         </View>
-      </View>
+      </ScrollView>
       <FloatingButton onPress={handleFloat} />
-    </>
+    </SafeAreaView>
   );
 };
 

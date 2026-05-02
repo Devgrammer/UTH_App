@@ -1,10 +1,14 @@
+import PageHeader from "@/components/ui/pageHeader";
 import { Image } from "expo-image";
 import { Share } from "lucide-react-native";
 import { Button, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const AboutScreen = () => {
   return (
+    <SafeAreaView>
     <ScrollView className="p-4">
+      <PageHeader title={'The loving history'} heading={'Kailash Banquet Hall'} />
       <View>
         <Image
           source={
@@ -103,6 +107,7 @@ const AboutScreen = () => {
         </View>
       </View>
     </ScrollView>
+    </SafeAreaView>
   );
 };
 

@@ -22,7 +22,9 @@ export default function RootLayout() {
   return (
     <Tabs
       backBehavior="history"
+     
       screenOptions={{
+        headerShown:false,
         sceneStyle: {
           backgroundColor: "#F7F8F9", // Your surface color
         },

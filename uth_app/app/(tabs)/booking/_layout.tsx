@@ -19,13 +19,14 @@ cssInterop(Image, { className: "style" });
 
 export default function RootLayout() {
   return (
-    <Stack screenOptions={{ headerShown: false}}>
+    <Stack screenOptions={{ headerShown:false}}>
       <Stack.Screen name="index" options={{ title: "My Bookings" }} />
       <Stack.Screen
         name="addBookingScreen"
         options={{
           title: "Add Booking",
-          presentation: "modal",
+          headerShown:true,
+
         }}
       />
     </Stack>

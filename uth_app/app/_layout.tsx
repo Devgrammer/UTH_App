@@ -10,6 +10,8 @@ import {
   Inter_500Medium,
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
 
 interface AuthState {
   token: string | null;
@@ -95,6 +97,8 @@ const RootLayout = () => {
 
   return (
     <AppContext.Provider value={value}>
+      <SafeAreaProvider>
+        <StatusBar style="light"  />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Protected guard={!hasOnboarded}>
           <Stack.Screen name="(onboard)" />
@@ -104,6 +108,7 @@ const RootLayout = () => {
           <Stack.Screen name="(tabs)" />
         </Stack.Protected>
       </Stack>
+      </SafeAreaProvider>
     </AppContext.Provider>
   );
 };
