@@ -4,6 +4,7 @@ const { body } = require("express-validator");
 const bookingController = require("../controllers/booking.controller");
 
 
-router.post('/register',bookingController.registerBooking)
+router.post('/register',bookingController.registerBooking);
+router.get('/my-bookings/:userId',bookingController.getMyBookings);
 
 module.exports=router;
