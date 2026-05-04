@@ -53,7 +53,7 @@ interface FormValues {
   pendingBalance: number;
   paymentMode: string;
   selectedPackage: 'silver' | 'gold' | 'bronze' | '';
-  bookingStatus: 'pending' | 'rejected' | 'cancelled' | 'confirmed'|'rescheduled';
+  bookingStatus: 'pending' | 'rejected' | 'cancelled' | 'confirmed' | 'rescheduled';
   eventNotes: string;
   venue: object | string
 }
@@ -390,7 +390,7 @@ const AddBookingScreen = () => {
           "autoCapitalize": "sentences",
           "keyboardType": "default"
         },
-        
+
       ]
     },
     {
@@ -437,7 +437,7 @@ const AddBookingScreen = () => {
       const response = await axios.get(API_URL.MY_VENUE.replace('userId', userDetail._id));
 
       if (response.status === 200) {
-        let venuePickerDetail = response.data.data.map((data, index) => { return { label: data.venueName, value: { venueName: data.venueName, venueId: data._id , venueVID:data.venueId} } })
+        let venuePickerDetail = response.data.data.map((data, index) => { return { label: data.venueName, value: { venueName: data.venueName, venueId: data._id, venueVID: data.venueId } } })
         let updatedField = {
           "icon": HouseHeart,
           "label": "Venue",
@@ -479,9 +479,9 @@ const AddBookingScreen = () => {
     pendingBalance: 0,
     paymentMode: "",
     selectedPackage: "",
-    bookingStatus:"pending",
+    bookingStatus: "pending",
     eventNotes: "",
-    venue: { "venueId": "", "venueName": "", "venueVID": ""},
+    venue: { "venueId": "", "venueName": "", "venueVID": "" },
   };
 
   const options = {

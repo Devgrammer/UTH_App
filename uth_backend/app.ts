@@ -8,6 +8,7 @@ const connectToDB = require('./db/db')
 const cookieParser = require('cookie-parser')
 const userRoutes=require('./routes/user.route')
 const venueRoutes=require('./routes/venue.route')
+const bookingRoutes=require('./routes/booking.route')
 
 
 connectToDB();
@@ -33,5 +34,6 @@ app.get("/", (req, res) => {
 
 app.use('/api', userRoutes)
 app.use('/api/venue', venueRoutes)
+app.use('/api/booking', bookingRoutes)
 
 module.exports = app;
