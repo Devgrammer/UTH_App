@@ -97,7 +97,7 @@ module.exports.getAllUserVenue = async (req, res) => {
     if (!userVenue) {
       return res.status(404).json({ success: false, message: "Venue not found" })
     }
-    return res.status(200).json({ success: true, data: userVenue })
+    return res.status(200).json({ success: true, data:userVenue })
   } catch (error) {
     console.error(error);
     return res.status(500).json({
