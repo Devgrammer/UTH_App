@@ -1,10 +1,10 @@
-import { ValidationResult } from './../../uth_app/node_modules/@types/json-schema/index.d';
-const bookingModel = require('../models/booking.model')
-const bookingService = require('../services/booking.service')
-const {validationResult} =require('express-validator')
+import { ValidationResult } from "./../../uth_app/node_modules/@types/json-schema/index.d";
+const bookingModel = require("../models/booking.model");
+const bookingService = require("../services/booking.service");
+const { validationResult } = require("express-validator");
 
-
-module.exports.registerBooking =async(req,res)=>{
+// Register booking
+module.exports.registerBooking = async (req, res) => {
   const error = validationResult(req);
   if (!error.isEmpty()) {
     return res.status(400).json({ error: error.array() });
@@ -36,76 +36,100 @@ module.exports.registerBooking =async(req,res)=>{
     "booking.status": { $ne: "cancelled" },
   });
 
-if (overlappingBooking) {
-  throw new Error(
-    `Booking Conflict: This venue is already booked for "${
-      overlappingBooking.event.title
-    }" from ${new Date(overlappingBooking.venue.startDate).toLocaleDateString(
-      "en-IN",
-      { weekday: "long", year: "numeric", month: "long", day: "numeric" }
-    )} to ${new Date(overlappingBooking.venue.endDate).toLocaleDateString(
-      "en-IN",
-      { weekday: "long", year: "numeric", month: "long", day: "numeric" }
-    )}.`
-  );
-}
+  if (overlappingBooking) {
+    throw new Error(
+      `Booking Conflict: This venue is already booked for "${
+        overlappingBooking.event.title
+      }" from ${new Date(overlappingBooking.venue.startDate).toLocaleDateString(
+        "en-IN",
+        { weekday: "long", year: "numeric", month: "long", day: "numeric" }
+      )} to ${new Date(overlappingBooking.venue.endDate).toLocaleDateString(
+        "en-IN",
+        { weekday: "long", year: "numeric", month: "long", day: "numeric" }
+      )}.`
+    );
+  }
 
-const bookingId = await bookingModel.generateUniqueBookingId()
+  const bookingId = await bookingModel.generateUniqueBookingId();
   const bookingData = {
-    title:event.title,
-    type:event.type,
-    guestCount:event.guestCount,
-    notes:event.notes,
+    title: event.title,
+    type: event.type,
+    guestCount: event.guestCount,
+    notes: event.notes,
 
     // Venue Group
-    venueId:venue.venueId,
-    venueVID:venue.venueVID,
-    venueName:venue.venueName,
-    selectedHall:venue.selectedHall,
-    startDate:venue.startDate,
-    endDate:venue.endDate,
+    venueId: venue.venueId,
+    venueVID: venue.venueVID,
+    venueName: venue.venueName,
+    selectedHall: venue.selectedHall,
+    startDate: venue.startDate,
+    endDate: venue.endDate,
 
     // Client Group
-    clientName:client.name,
-    clientPhoneNumber:client.phoneNumber,
-    clientEmailAddress:client.emailAddress,
-    clientWhatsappNumber:client.whatsappNumber,
-    clientAddress:client.address,
-    aadharLast4:client.aadharLast4,
+    clientName: client.name,
+    clientPhoneNumber: client.phoneNumber,
+    clientEmailAddress: client.emailAddress,
+    clientWhatsappNumber: client.whatsappNumber,
+    clientAddress: client.address,
+    aadharLast4: client.aadharLast4,
 
     // Reference Group
-    personOfReference:reference.personOfReference,
+    personOfReference: reference.personOfReference,
 
     // Finance Group
-    totalContractAmount:finance.totalContractAmount,
-    advanceAmountPaid:finance.advanceAmountPaid,
-    pendingBalance:finance.pendingBalance,
-    paymentMode:finance.paymentMode,
+    totalContractAmount: finance.totalContractAmount,
+    advanceAmountPaid: finance.advanceAmountPaid,
+    pendingBalance: finance.pendingBalance,
+    paymentMode: finance.paymentMode,
 
     // Package Group
-    selectedPackage:packages.selectedPackage,
+    selectedPackage: packages.selectedPackage,
 
     // Booking Group
-    bookingId:bookingId,
-    status:booking.status,
-    bookedAt:booking.bookedAt,
-    source:booking.source,
+    bookingId: bookingId,
+    status: booking.status,
+    bookedAt: booking.bookedAt,
+    source: booking.source,
 
     // Created By Group
-    userId:createdBy.userId,
-    userVID:createdBy.userVID,
-    fullName:createdBy.fullName,
-    email:createdBy.email,
-    phoneNumber:createdBy.phoneNumber,
-    role:createdBy.role,
+    userId: createdBy.userId,
+    userVID: createdBy.userVID,
+    fullName: createdBy.fullName,
+    email: createdBy.email,
+    phoneNumber: createdBy.phoneNumber,
+    role: createdBy.role,
   };
 
-
-    const newBooking = await bookingService.createBooking(bookingData)
+  const newBooking = await bookingService.createBooking(bookingData);
 
   res.status(201).json({
     success: true,
     message: "Booking created successfully",
-    data: newBooking
+    data: newBooking,
   });
-}
+};
+
+// Get my all bookings
+module.exports.getMyBookings = async (req, res) => {
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res.status(400).json({ error: error.array() });
+  }
+  try {
+    const { userId } = req.params;
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: "UserId is required",
+      });
+    }
+
+    const bookings = await bookingModel
+      .find({ "createdBy.userId": userId })
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({ sucess: true, count: bookings.length, data: bookings });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
